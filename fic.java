@@ -11,6 +11,9 @@ public class fic{
             binaryRepresentation = "0"+binaryRepresentation;
         }
         return binaryRepresentation;
+    } 
+    public static String binToHexa(String input){
+        return "";
     }
     public static void main(String[] args){
         // Scanner fileInput = new Scanner(System.in);  
@@ -49,7 +52,8 @@ public class fic{
             double primeSqrd=  Math.sqrt(prime[x])- (int)Math.sqrt(prime[x]) ;  
             String bruh = (String.format("%.16f", primeSqrd)).substring(2, 18);  
             Long test = Long.parseLong(bruh);  
-            String primeBin = Long.toBinaryString(test);
+            String primeBin = (Long.toBinaryString(test)).substring(32); //cut to 32 bit binary string 
+
 
             System.out.println("SQRT of prime number " + prime[x] + " = " + primeBin); 
         }
