@@ -1,7 +1,8 @@
 
 import java.util.Scanner;  
 import java.lang.Math;  
-import java.math.BigDecimal;
+import java.math.BigDecimal;  
+import java.math.MathContext;
 
 public class fic{
 
@@ -57,9 +58,11 @@ public class fic{
             // String bruh = (String.format("%.28f", primeSqrd)).substring(2, 26);  
             // Long test = Long.parseLong(bruh);  
             // String primeBin = (Long.toBinaryString(test)).substring(32); //cut to 32 bit binary string   
-            BigDecimal test = new BigDecimal("123");
-            // double primeSqrd = Math.sqrt(prime[x]);
-            
+            BigDecimal test = new BigDecimal("2");
+            // double primeSqrd = Math.sqrt(prime[x]);   
+            MathContext num = new MathContext(2); // Creating MathContext with precision of 2
+            BigDecimal next = test.sqrt(num); 
+            System.out.print(next);
 
             // System.out.println("SQRT of prime number " + prime[x] + " = " + primeSqrd);  
             // binToHexa(primeBin);
