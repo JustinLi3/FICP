@@ -2,7 +2,7 @@
 import java.util.Scanner;  
 import java.lang.Math;  
 import java.math.BigDecimal;  
-import java.math.MathContext;
+import java.math.MathContext; 
 
 public class fic{
 
@@ -13,13 +13,21 @@ public class fic{
             binaryRepresentation = "0"+binaryRepresentation;
         }
         return binaryRepresentation;
-    } 
+    }  
+    public static BigDecimal sqrt(BigDecimal number, MathContext mc) { // Newton-Raphson Method to obtain square root to the mc percision
+        BigDecimal initialGuess = number.divide(BigDecimal.valueOf(2), mc); // could be any reasonble guess but can affect convergence speed 
+        BigDecimal result = initialGuess;
+        for (int i = 0; i < 10; i++) { // Adjust the number of iterations for accuracy
+            result = (result.add(number.divide(result,mc))).divide(BigDecimal.valueOf(2), mc); //implementation of Newton Equation
+        }
+        return result;
+    }
     public static String binToHexa(String input){ 
         // for(int x = 0 ; x<input.length(); x+=3){
         //     System.out.println(input.substring(x,x+4));
         // }
         return "";
-    }
+    } 
     public static void main(String[] args){
         // Scanner fileInput = new Scanner(System.in);  
         // String test = fileInput.next(); // read in file
@@ -52,20 +60,14 @@ public class fic{
         //     System.out.println(rows[x]);
         // } 
         String[] hashVals = new String[8];  
-        int[] prime = {2,3,5,7,11,13,17,19};  //Setting the initial hash value with the first 32 decimal bits 
+        int[] prime = {2,3,5,7,11,13,17,19};  //Setting the initial hash value with the first 32 decimal bits  
+        MathContext sqr = new MathContext(34); //Initializing percision 32(decimal) + 2
         for(int x = 0 ; x< hashVals.length; x++){   
-            // double primeSqrd=  Math.sqrt(prime[x])- (int)Math.sqrt(prime[x]) ;  
-            // String bruh = (String.format("%.28f", primeSqrd)).substring(2, 26);  
-            // Long test = Long.parseLong(bruh);  
-            // String primeBin = (Long.toBinaryString(test)).substring(32); //cut to 32 bit binary string   
-            BigDecimal test = new BigDecimal("2");
-            // double primeSqrd = Math.sqrt(prime[x]);   
-            MathContext num = new MathContext(2); // Creating MathContext with precision of 2
-            BigDecimal next = test.sqrt(num); 
-            System.out.print(next);
+            BigDecimal primeNum = new BigDecimal(prime[x]); //declare each prime as a BigDecimal obj
+            BigDecimal primeSqrd = sqrt(primeNum, sqr); //initialize primeSqrd to the output of a squared prime number
+            System.out.println(primeSqrd);
 
-            // System.out.println("SQRT of prime number " + prime[x] + " = " + primeSqrd);  
-            // binToHexa(primeBin);
+
         } 
 
 
