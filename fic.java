@@ -53,15 +53,16 @@ public class fic{
         String[] hashVals = new String[8];  
         int[] prime = {2,3,5,7,11,13,17,19};  //Setting the initial hash value with the first 32 decimal bits 
         for(int x = 0 ; x< hashVals.length; x++){   
-            double primeSqrd=  Math.sqrt(prime[x])- (int)Math.sqrt(prime[x]) ;  
-            String bruh = (String.format("%.28f", primeSqrd)).substring(2, 26);  
-            Long test = Long.parseLong(bruh);  
-            String primeBin = (Long.toBinaryString(test)).substring(32); //cut to 32 bit binary string  
+            // double primeSqrd=  Math.sqrt(prime[x])- (int)Math.sqrt(prime[x]) ;  
+            // String bruh = (String.format("%.28f", primeSqrd)).substring(2, 26);  
+            // Long test = Long.parseLong(bruh);  
+            // String primeBin = (Long.toBinaryString(test)).substring(32); //cut to 32 bit binary string   
+            BigDecimal test = new BigDecimal("123");
+            // double primeSqrd = Math.sqrt(prime[x]);
+            
 
-
-
-            System.out.println("SQRT of prime number " + prime[x] + " = " + primeBin);  
-            binToHexa(primeBin);
+            // System.out.println("SQRT of prime number " + prime[x] + " = " + primeSqrd);  
+            // binToHexa(primeBin);
         } 
 
 
