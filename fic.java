@@ -1,6 +1,7 @@
 
 import java.util.Scanner;  
-import java.lang.Math; 
+import java.lang.Math;  
+import java.math.BigDecimal;
 
 public class fic{
 
@@ -53,7 +54,7 @@ public class fic{
         int[] prime = {2,3,5,7,11,13,17,19};  //Setting the initial hash value with the first 32 decimal bits 
         for(int x = 0 ; x< hashVals.length; x++){   
             double primeSqrd=  Math.sqrt(prime[x])- (int)Math.sqrt(prime[x]) ;  
-            String bruh = (String.format("%.16f", primeSqrd)).substring(2, 18);  
+            String bruh = (String.format("%.28f", primeSqrd)).substring(2, 26);  
             Long test = Long.parseLong(bruh);  
             String primeBin = (Long.toBinaryString(test)).substring(32); //cut to 32 bit binary string  
 
