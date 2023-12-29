@@ -60,12 +60,14 @@ public class fic{
         //     System.out.println(rows[x]);
         // } 
         String[] hashVals = new String[8];  
-        int[] prime = {2,3,5,7,11,13,17,19};  //Setting the initial hash value with the first 32 decimal bits  
+        int[] prime = {2,3,5,7,11,13,17,19};  //Setting the initial hash value with the first 32 decimal values  
         MathContext sqr = new MathContext(34); //Initializing percision 32(decimal) + 2
         for(int x = 0 ; x< hashVals.length; x++){   
             BigDecimal primeNum = new BigDecimal(prime[x]); //declare each prime as a BigDecimal obj
             BigDecimal primeSqrd = sqrt(primeNum, sqr); //initialize primeSqrd to the output of a squared prime number
-            System.out.println(primeSqrd);
+            String str = primeSqrd.toString(); 
+            str = str.substring(2,str.length()); //retrieve only the 32 decimal point values
+            System.out.println(str); 
 
 
         } 
