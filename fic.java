@@ -19,12 +19,16 @@ public class fic{
         BigDecimal initialGuess = number.divide(BigDecimal.valueOf(2), mc); // could be any reasonble guess but can affect convergence speed 
         BigDecimal result = initialGuess;
         for (int i = 0; i < 10; i++) { // Adjust the number of iterations for accuracy
-            result = (result.add(number.divide(result,mc))).divide(BigDecimal.valueOf(2), mc); //implementation of Newton Equation
+            result = (result.add(number.divide(result,mc))).divide(BigDecimal.valueOf(2), mc); //implementation of Newton Equation 
         }
         return result;
     }
     public static String intToHexa(BigInteger input){ 
-        
+        while((input.mod(BigInteger.valueOf(16))).compareTo(BigInteger.valueOf(0))!=0){ 
+            System.out.println(input.mod(BigInteger.valueOf(16)));
+            input = input.divide(BigInteger.valueOf(16)); 
+
+        }
         return "";
     } 
     public static void main(String[] args){
