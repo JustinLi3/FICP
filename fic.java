@@ -23,14 +23,18 @@ public class fic{
         }
         return result;
     }
-    public static String intToHexa(BigInteger input){ 
-        while((input.mod(BigInteger.valueOf(16))).compareTo(BigInteger.valueOf(0))!=0){ 
-            System.out.println(input.mod(BigInteger.valueOf(16)));
-            input = input.divide(BigInteger.valueOf(16)); 
-
+    public static String decToBin(BigDecimal input){  
+        String binary = "";
+        while(binary.length()<32){ //Binary bits appended until 32 bits
+            BigDecimal num = input.multiply(BigDecimal.valueOf(2)); //Here by a method to find binary through decimal, we multiply by base
+            binary += (num.intValue()); //we only take the remaining whole number and append
+            input = (input.multiply(BigDecimal.valueOf(2)).subtract(BigDecimal.valueOf(input.multiply(BigDecimal.valueOf(2)).intValue()))); //Here we set our input equal to that multiplied by two and subtracted by a whole number
+        }  
+        int number = Integer.parseInt(binary.substring(0, 4), 2); //TEST obtaining only the first four binary bits, If you set radix equal to the same base, you get the original!!!
+        String test = Integer.toString(number); //
+        return test;
         }
-        return "";
-    } 
+
     public static void main(String[] args){
         // Scanner fileInput = new Scanner(System.in);  
         // String test = fileInput.next(); // read in file
@@ -69,7 +73,9 @@ public class fic{
             BigDecimal primeNum = new BigDecimal(prime[x]); //declare each prime as a BigDecimal obj
             BigDecimal primeSqrd = sqrt(primeNum, sqr); //initialize primeSqrd to the output of a squared prime number
             primeSqrd = primeSqrd.subtract(BigDecimal.valueOf(primeSqrd.intValue()));  //taking only decimal portion of prime squared
-            System.out.println(primeSqrd);
+            System.out.println(primeSqrd); 
+            String primeBin = decToBin(primeSqrd); 
+            System.out.println(primeBin);
 
         } 
 
