@@ -68,11 +68,8 @@ public class fic{
         for(int x = 0 ; x< hashVals.length; x++){   
             BigDecimal primeNum = new BigDecimal(prime[x]); //declare each prime as a BigDecimal obj
             BigDecimal primeSqrd = sqrt(primeNum, sqr); //initialize primeSqrd to the output of a squared prime number
-            String str = primeSqrd.toString(); 
-            str = str.substring(2,str.length()); //retrieve only the 32 decimal point values 
-            BigInteger primeInt = new BigInteger(str); //overflow must be put as Big Integer class in order to perform int to hexadecimal
-            System.out.println(primeInt);
-            str = intToHexa(primeInt); //convert decimal to hexadecimal value
+            primeSqrd = primeSqrd.subtract(BigDecimal.valueOf(primeSqrd.intValue()));  //taking only decimal portion of prime squared
+            System.out.println(primeSqrd);
 
         } 
 
