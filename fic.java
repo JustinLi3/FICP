@@ -32,9 +32,29 @@ public class fic{
             input = (input.multiply(BigDecimal.valueOf(2)).subtract(BigDecimal.valueOf(input.multiply(BigDecimal.valueOf(2)).intValue()))); //Here we set our input equal to that multiplied by two and subtracted by a whole number
         }    
         String result = "";
-        for(int x = 0 ; x<8 ; x++){
-            int number = Integer.parseInt(binary.substring(0, 4), 2); //TEST obtaining only the first four binary bits, If you set radix equal to the same base, you get the original!!!
-            result += Integer.toString(number); 
+        for(int x = 0 ; x<32 ; x+=4){
+            String number = Integer.toString(Integer.parseInt(binary.substring(x, x+4), 2)); //TEST obtaining only the first four binary bits, If you set radix equal to the same base, you get the original!!! 
+            switch(number){
+                case "10":
+                    number = "a"; 
+                    break; 
+                case "11":
+                    number = "b"; 
+                    break; 
+                case "12": 
+                    number = "c"; 
+                    break;  
+                case "13": 
+                    number = "d";  
+                    break;
+                case "14": 
+                    number = "e"; 
+                    break; 
+                case "15": 
+                    number = "f"; 
+                    break;
+            }
+            result += number; 
         }
         return result;
         }
@@ -77,9 +97,8 @@ public class fic{
             BigDecimal primeNum = new BigDecimal(prime[x]); //declare each prime as a BigDecimal obj
             BigDecimal primeSqrd = sqrt(primeNum, sqr); //initialize primeSqrd to the output of a squared prime number
             primeSqrd = primeSqrd.subtract(BigDecimal.valueOf(primeSqrd.intValue()));  //taking only decimal portion of prime squared
-            System.out.println(primeSqrd); 
-            String primeBin = decToHexa(primeSqrd); 
-            System.out.println(primeBin);
+            String primeHexa = decToHexa(primeSqrd); 
+            System.out.println(primeHexa);
 
         } 
 
