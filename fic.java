@@ -3,9 +3,9 @@ import java.util.Scanner;
 import java.lang.Math;  
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.math.MathContext; 
+import java.math.MathContext;  
+import java.util.ArrayList;
  
-//HAPPY NEW YEAR
 public class fic{
 
     public static String charToBinary(char input){
@@ -15,7 +15,27 @@ public class fic{
             binaryRepresentation = "0"+binaryRepresentation;
         }
         return binaryRepresentation;
-    }  
+    }   
+    public static ArrayList<Integer> sieve_of_eratosthenes(int limit){
+        ArrayList<Integer> primesChecked = new ArrayList<>();  
+        primesChecked.add(2);
+        int num = 3; 
+    
+        while(primesChecked.size()<8){  
+            boolean test = true;
+             for(int x = 0 ; x<primesChecked.size(); x++){
+                if(num%(primesChecked.get(x))==0){ 
+                    test = false;
+                 } 
+             }  
+             if(test){
+                primesChecked.add(num); 
+             } 
+             num++;
+        } 
+        return primesChecked;
+
+    }
     public static BigDecimal sqrt(BigDecimal number, MathContext mc) { // Newton-Raphson Method to obtain square root to the mc percision
         BigDecimal initialGuess = number.divide(BigDecimal.valueOf(2), mc); // could be any reasonble guess but can affect convergence speed 
         BigDecimal result = initialGuess;
@@ -69,7 +89,8 @@ public class fic{
         // }   
 
         // int binLength = binary.length();
-        // int padding = (binary.length()/512)*512 + 512; // Find nearest multiple of 512 bits 
+        // int padding = (binary.length()/512)*512 + 512; // Find nearest multiple of 512 bits  
+        // int block = padding/512; //Finding the amount of blocks
         // int bitRows = padding/32;  // get the amount of rows the binary string can be organized  
         // binary += "1";  // appending bit "1" to the end 
 
@@ -84,29 +105,36 @@ public class fic{
         // System.out.println(binary);  
         // System.out.println(binLength);
 
-        // System.out.println(binary.length());   
-        // String[] rows = new String[16];  //2:39 for N=1 blocks, there are only 16, 32 bit words
+        // System.out.println(binary.length());    
+        //int row = block*16;
+        // String[] rows = new String[row];  //2:39 for N=1 blocks, there are only 16, 32 bit words
         // for(int x = 0 ; x < bitRows ; x++){
         //     rows[x] = binary.substring(x*32,x*32+32);  //plug binary into block
         //     System.out.println(rows[x]);
         // } 
-        String[] hashVals = new String[8];  
-        int[] prime = {2,3,5,7,11,13,17,19};  //Setting the initial hash value with the first 32 decimal values  
-        MathContext sqr = new MathContext(34); //Initializing percision 32(decimal) + 2
-        for(int x = 0 ; x< hashVals.length; x++){   
-            BigDecimal primeNum = new BigDecimal(prime[x]); //declare each prime as a BigDecimal obj
-            BigDecimal primeSqrd = sqrt(primeNum, sqr); //initialize primeSqrd to the output of a squared prime number
-            primeSqrd = primeSqrd.subtract(BigDecimal.valueOf(primeSqrd.intValue()));  //taking only decimal portion of prime squared
-            String primeHexa = decToHexa(primeSqrd); 
-            System.out.println(primeHexa);
+        // String[] hashVals = new String[8];  //Setting the initial hash value 
+        // ArrayList<Integer> primes1 = sieve_of_eratosthenes(8);  //Here we are using the Sieve of Eratosthenes algo to find first 8 prime numbers
+        // MathContext sqr = new MathContext(34); //Initializing percision 32(decimal) + 2
+        // for(int x = 0 ; x< hashVals.length; x++){  
+        //     BigDecimal primeNum = new BigDecimal((primes1.get(x))); //declare each prime as a BigDecimal obj
+        //     BigDecimal primeSqrd = sqrt(primeNum, sqr); //initialize primeSqrd to the output of a squared prime number
+        //     primeSqrd = primeSqrd.subtract(BigDecimal.valueOf(primeSqrd.intValue()));  //taking only decimal portion of prime squared
+        //     hashVals[x] = decToHexa(primeSqrd);   
+        //     System.out.println(hashVals[x]);
 
-        } 
+
+        // }  
+        //onto constants, first 32 bits of the fractional parts of the cube roots of the first sixty-four prime numbers 
+        //In order to find the first sixty-four prime numbers, we are going to continue using the Sieve of Eratosthenes algorithm 
+
+        
 
 
 
 
         // fileInput.close();
 
-    } 
+    // }  
+}
     
 }
