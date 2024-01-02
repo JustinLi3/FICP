@@ -4,8 +4,9 @@ import java.lang.Math;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;  
-import java.util.ArrayList;
- 
+import java.util.ArrayList; 
+import java.util.Arrays;
+
 public class fic{
 
     public static String charToBinary(char input){
@@ -80,50 +81,50 @@ public class fic{
         }
 
     public static void main(String[] args){
-        // Scanner fileInput = new Scanner(System.in);  
-        // String test = fileInput.next(); // read in file
-        // String binary = ""; 
+        Scanner fileInput = new Scanner(System.in);  
+        String test = fileInput.next(); // read in file
+        String binary = ""; 
 
-        // for(int x = 0 ; x<test.length(); x++){  
-        //     binary += charToBinary(test.charAt(x));  // for each character in file, get the binary string
-        // }   
+        for(int x = 0 ; x<test.length(); x++){  
+            binary += charToBinary(test.charAt(x));  // for each character in file, get the binary string
+        }   
 
-        // int binLength = binary.length();
-        // int padding = (binary.length()/512)*512 + 512; // Find nearest multiple of 512 bits  
-        // int block = padding/512; //Finding the amount of blocks
-        // int bitRows = padding/32;  // get the amount of rows the binary string can be organized  
-        // binary += "1";  // appending bit "1" to the end 
+        int binLength = binary.length();
+        int padding = (binary.length()/512)*512 + 512; // Find nearest multiple of 512 bits  
+        int block = padding/512; //Finding the amount of blocks
+        int bitRows = padding/32;  // get the amount of rows the binary string can be organized  
+        binary += "1";  // appending bit "1" to the end 
 
-        // String binOfbinLength = Integer.toBinaryString(binLength); // Get the binary of original bit length of file
-        // System.out.println(binOfbinLength);  
+        String binOfbinLength = Integer.toBinaryString(binLength); // Get the binary of original bit length of file
+        System.out.println(binOfbinLength);  
 
-        // while(binary.length()< (padding- binOfbinLength.length())){
-        //     binary+="0"; // append 0's until it is the multiple of 512 bits minus the binary string of the original length away 
-        // }   
-        // binary+=binOfbinLength; // append binary string in order to fufill 512 multiple  
+        while(binary.length()< (padding- binOfbinLength.length())){
+            binary+="0"; // append 0's until it is the multiple of 512 bits minus the binary string of the original length away 
+        }   
+        binary+=binOfbinLength; // append binary string in order to fufill 512 multiple  
 
-        // System.out.println(binary);  
-        // System.out.println(binLength);
+        System.out.println(binary);  
+        System.out.println(binLength);
 
-        // System.out.println(binary.length());    
-        //int row = block*16;
-        // String[] rows = new String[row];  //2:39 for N=1 blocks, there are only 16, 32 bit words
-        // for(int x = 0 ; x < bitRows ; x++){
-        //     rows[x] = binary.substring(x*32,x*32+32);  //plug binary into block
-        //     System.out.println(rows[x]);
-        // } 
-        // String[] hashVals = new String[8];  //Setting the initial hash value 
-        // ArrayList<Integer> primes1 = sieve_of_eratosthenes(8);  //Here we are using the Sieve of Eratosthenes algo to find first 8 prime numbers
-        // MathContext sqr = new MathContext(34); //Initializing percision 32(decimal) + 2
-        // for(int x = 0 ; x< hashVals.length; x++){  
-        //     BigDecimal primeNum = new BigDecimal(primes1.get(x)); //declare each prime as a BigDecimal obj
-        //     BigDecimal primeSqrd = sqrt(primeNum, sqr); //initialize primeSqrd to the output of a squared prime number
-        //     primeSqrd = primeSqrd.subtract(BigDecimal.valueOf(primeSqrd.intValue()));  //taking only decimal portion of prime squared
-        //     hashVals[x] = decToHexa(primeSqrd);   
-        //     System.out.println(hashVals[x]);
+        System.out.println(binary.length());    
+        int row = block*16;
+        String[] rows = new String[row];  //2:39 for N=1 blocks, there are only 16, 32 bit words
+        for(int x = 0 ; x < bitRows ; x++){
+            rows[x] = binary.substring(x*32,x*32+32);  //plug binary into block
+            System.out.println(rows[x]);
+        } 
+        String[] hashVals = new String[8];  //Setting the initial hash value 
+        ArrayList<Integer> primes1 = sieve_of_eratosthenes(8);  //Here we are using the Sieve of Eratosthenes algo to find first 8 prime numbers
+        MathContext sqr = new MathContext(34); //Initializing percision 32(decimal) + 2
+        for(int x = 0 ; x< hashVals.length; x++){  
+            BigDecimal primeNum = new BigDecimal(primes1.get(x)); //declare each prime as a BigDecimal obj
+            BigDecimal primeSqrd = sqrt(primeNum, sqr); //initialize primeSqrd to the output of a squared prime number
+            primeSqrd = primeSqrd.subtract(BigDecimal.valueOf(primeSqrd.intValue()));  //taking only decimal portion of prime squared
+            hashVals[x] = decToHexa(primeSqrd);   
+            System.out.println(hashVals[x]);
 
 
-        // }  
+        }  
         //onto constants, first 32 bits of the fractional parts of the cube roots of the first sixty-four prime numbers 
         String prime64[] = new String[]{ //64 different keys
             "428a2f98", "71374491", "b5c0fbcf", "e9b5dba5", "3956c25b", "59f111f1", "923f82a4", "ab1c5ed5",
@@ -134,7 +135,18 @@ public class fic{
             "a2bfe8a1", "a81a664b", "c24b8b70", "c76c51a3", "d192e819", "d6990624", "f40e3585", "106aa070",
             "19a4c116", "1e376c08", "2748774c", "34b0bcb5", "391c0cb3", "4ed8aa4a", "5b9cca4f", "682e6ff3", 
             "748f82ee", "78a5636f", "84c87814", "8cc70208", "90befffa", "a4506ceb", "bef9a3f7", "c67178f2"};  
-        //Preparing message schedule
+        //Preparing message schedule 
+        String[] message = Arrays.copyOf(rows, block*64);  
+        //Message formula 
+        for(int x = rows.length; x<rows.length+1;x++){
+            // message[x] = sigma1(message[x-2]) + message[x-7] + sigma0(message[x-15]) + message[x-16];  //Message schedule algo
+            System.out.println(message[x-2]); 
+            System.out.println(message[x-7]); 
+            System.out.println(message[x-15]); 
+            System.out.println(message[x-16]); 
+        } 
+
+
 
 
 
@@ -143,9 +155,8 @@ public class fic{
 
 
 
-        // fileInput.close();
+        fileInput.close();
 
-    // }  
+    }  
 }
     
-}
