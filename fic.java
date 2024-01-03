@@ -80,14 +80,22 @@ public class fic{
         return result;
         }  
     public static String addMod2(String bin1, String bin2, String bin3){ // Function to add rotated and shifted binary string 
-        return "";
+        String bin = "";
+        for(int x = 0 ; x<32 ; x++){ // traversal by formula
+            if(((int)bin1.charAt(x)%2 + (int)bin2.charAt(x)%2 + (int)bin3.charAt(x))%2==1){ //if bit digits at n sum mod 2 is 1, 1 is appended
+                bin+="1"; 
+                continue;
+            } 
+            bin+="0"; //otherwise append 0
+        }
+        return bin;
     }
     public static String sigma1(String bin){ //Here we are initializing sigma 1, right rotation 7 bits, then 18 bits, then shift 3 
         String bin1 = bin.substring(bin.length()-7) + bin.substring(0,bin.length()-7);  // right rotation of 7 done by appending the first 0 to the seventh to last binary string to the seventh to last binary string
         String bin2 = bin.substring(bin.length()-18) + bin.substring(0,bin.length()-18); 
         String bin3 = bin.substring(bin.length()-3) + bin.substring(0,bin.length()-3); 
         bin3 = "000" + bin3.substring(3); //right shift of 3 bits done by regular 3 bit rotation and then appending the third to last binary string to three 0s
-        return bin3;
+        return addMod2(bin1,bin2,bin3);
     }  
     public static String sigma0(String bin){ //Here we are initializing sigma 0, right rotation 17 bits, then 19 bits, then shift 10
         return "";
