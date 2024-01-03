@@ -79,8 +79,10 @@ public class fic{
         }
         return result;
         } 
-    public static String sigma1(String bin){ //Here we are initializing sigma 1, right rotation 7 bits, then 18 bits, then shift 3
-        return "";
+    public static String sigma1(String bin){ //Here we are initializing sigma 1, right rotation 7 bits, then 18 bits, then shift 3 
+        String bin1 = bin.substring(bin.length()-7) + bin.substring(0,bin.length()-7); 
+
+        return bin1;
     } 
     public static String sigma0(String bin){ //Here we are initializing sigma 0, right rotation 17 bits, then 19 bits, then shift 10
         return "";
@@ -145,8 +147,8 @@ public class fic{
         String[] message = Arrays.copyOf(rows, block*64);  
         //Message formula 
         for(int x = rows.length; x<rows.length+1;x++){
-            message[x] = sigma1(message[x-2]) + message[x-7] + sigma0(message[x-15]) + message[x-16];  //Message schedule algo
-    
+            // message[x] = sigma1(message[x-2]) + message[x-7] + sigma0(message[x-15]) + message[x-16];  //Message schedule algo
+            System.out.println(sigma1("11000111000111000110010011000001"));
         } 
 
 
