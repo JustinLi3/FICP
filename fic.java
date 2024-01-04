@@ -177,12 +177,9 @@ public class fic{
             message[x] = "00000000000000000000000000000000";
         }   
         //Message formula 
-        for(int x = 16; x<17;x++){
+        for(int x = 16; x<message.length;x++){
             System.out.println("Message at index " + x + ": " + addMod2to32(sigma0(message[x-2]), message[x-7], sigma1(message[x-15]), message[x-16])); 
-            System.out.println(sigma0(message[x-2])); 
-            System.out.println(message[x-7]);
-            System.out.println(sigma1(message[x-15]));
-            System.out.println(message[x-16]);
+            
         }  
         fileInput.close();
 
