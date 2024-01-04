@@ -97,8 +97,12 @@ public class fic{
         bin3 = "000" + bin3.substring(3); //right shift of 3 bits done by regular 3 bit rotation and then appending the third to last binary string to three 0s
         return addMod2(bin1,bin2,bin3);
     }  
-    public static String sigma0(String bin){ //Here we are initializing sigma 0, right rotation 17 bits, then 19 bits, then shift 10
-        return "";
+    public static String sigma0(String bin){ //Here we are initializing sigma 0, right rotation 17 bits, then 19 bits, then shift 10 
+        String bin1 = bin.substring(bin.length()-17) + bin.substring(0,bin.length()-17);  // right rotation of 17 done by appending the first 0 to the 17th to last binary string to the 17th to last binary string
+        String bin2 = bin.substring(bin.length()-19) + bin.substring(0,bin.length()-19); 
+        String bin3 = bin.substring(bin.length()-10) + bin.substring(0,bin.length()-10); 
+        bin3 = "0000000000" + bin3.substring(10); //right shift of 10 bits done by regular 10 bit rotation and then appending the 10th to last binary string to three 0s
+        return addMod2(bin1,bin2,bin3);
     }
 
     public static void main(String[] args){
@@ -161,7 +165,8 @@ public class fic{
         //Message formula 
         for(int x = rows.length; x<rows.length+1;x++){
             // message[x] = sigma1(message[x-2]) + message[x-7] + sigma0(message[x-15]) + message[x-16];  //Message schedule algo
-            System.out.println(sigma1("11000111000111000110010011000001"));
+            System.out.println(sigma1("11000111000111000110010011000001")); 
+            System.out.println(sigma0("11000111000111000110010011000001"));
         } 
 
 
