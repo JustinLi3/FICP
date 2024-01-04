@@ -5,8 +5,9 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;  
 import java.util.ArrayList; 
-import java.util.Arrays;
-
+import java.util.Arrays; 
+import java.util.HashMap;
+ 
 public class fic{
 
     public static String charToBinary(char input){
@@ -149,17 +150,17 @@ public class fic{
             rows[x] = binary.substring(x*32,x*32+32);  //plug binary into block
             System.out.println(rows[x]);
         } 
-        String[] hashVals = new String[8];  //Setting the initial hash value 
+        HashMap<Character,String> hashVals = new HashMap<>();  //Setting the initial hash value 
         ArrayList<Integer> primes1 = sieve_of_eratosthenes(8);  //Here we are using the Sieve of Eratosthenes algo to find first 8 prime numbers
-        MathContext sqr = new MathContext(34); //Initializing percision 32(decimal) + 2
-        for(int x = 0 ; x< hashVals.length; x++){  
+        MathContext sqr = new MathContext(34); //Initializing percision 32(decimal) + 2 
+        char ptr = 'a';
+        for(int x = 0 ; x< 8; x++){  
             BigDecimal primeNum = new BigDecimal(primes1.get(x)); //declare each prime as a BigDecimal obj
             BigDecimal primeSqrd = sqrt(primeNum, sqr); //initialize primeSqrd to the output of a squared prime number
-            primeSqrd = primeSqrd.subtract(BigDecimal.valueOf(primeSqrd.intValue()));  //taking only decimal portion of prime squared
-            hashVals[x] = decToHexa(primeSqrd);   
-            System.out.println(hashVals[x]);
-
-
+            primeSqrd = primeSqrd.subtract(BigDecimal.valueOf(primeSqrd.intValue()));  //taking only decimal portion of prime squared 
+            hashVals.put((Character)ptr, decToHexa(primeSqrd)); 
+            System.out.println(ptr);
+            System.out.println(hashVals.get((Character)(ptr++))); 
         }  
         //onto constants, first 32 bits of the fractional parts of the cube roots of the first sixty-four prime numbers 
         String prime64[] = new String[]{ //64 different keys
