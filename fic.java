@@ -131,18 +131,14 @@ public class fic{
         int block = padding/512; //Finding the amount of blocks
         int bitRows = padding/32;  // get the amount of rows the binary string can be organized  
         binary += "1";  // appending bit "1" to the end 
-
         String binOfbinLength = Integer.toBinaryString(binLength); // Get the binary of original bit length of file
         System.out.println(binOfbinLength);  
-
         while(binary.length()< (padding- binOfbinLength.length())){
             binary+="0"; // append 0's until it is the multiple of 512 bits minus the binary string of the original length away 
         }   
         binary+=binOfbinLength; // append binary string in order to fufill 512 multiple  
-
         System.out.println(binary);  
         System.out.println(binLength);
-
         System.out.println(binary.length());    
         int row = block*16;
         String[] rows = new String[row];  //2:39 for N=1 blocks, there are only 16, 32 bit words
@@ -180,7 +176,6 @@ public class fic{
         //Message formula 
         for(int x = 16; x<message.length;x++){
             System.out.println("Message at index " + x + ": " + addMod2to32(sigma0(message[x-2]), message[x-7], sigma1(message[x-15]), message[x-16])); 
-            
         }  
         fileInput.close();
 
