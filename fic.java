@@ -80,6 +80,13 @@ public class fic{
         }
         return result;
         }  
+    public static String hexaTodec(String hexa){ 
+        String bin = Integer.toBinaryString(Integer.parseInt(hexa,16)); 
+        while(bin.length()<32){
+            bin = "0" + bin;
+        }
+        return bin;
+    }
     public static String addMod2(String bin1, String bin2, String bin3){ // Function to add rotated and shifted binary string 
         String bin = "";
         for(int x = 0 ; x<32 ; x++){ // traversal by formula
@@ -91,10 +98,10 @@ public class fic{
         }
         return bin;
     } 
-    public static String addMod2to32(String bin1, String bin2, String bin3, String bin4){//Final function  
+    public static String addMod2to32(String bin1, String bin2, String bin3, String bin4, String bin5){//Final function  
         String bin = "";
         for(int x = 0 ; x<32 ; x++){ // traversal by formula
-            if(((int)bin1.charAt(x) + (int)bin2.charAt(x) + (int)bin3.charAt(x) + (int)bin4.charAt(x))%2==1){ //if bit digits at n sum mod 2 is 1, 1 is appended
+            if(((int)bin1.charAt(x) + (int)bin2.charAt(x) + (int)bin3.charAt(x) + (int)bin4.charAt(x)+ (int)bin5.charAt(x))%2==1){ //if bit digits at n sum mod 2 is 1, 1 is appended
                 bin+="1"; 
                 continue;
             } 
@@ -109,8 +116,13 @@ public class fic{
         bin3 = "0".repeat(shift) + bin3.substring(shift); 
         return addMod2(bin1,bin2,bin3);
     }  
-    public static String Csigma(String bin, int firstRot, int secRot, int thrRot){ //Here I initialized the second variation of sigma, which are a series of three bit rotations each with unique input values
-        return "";
+    public static String Csigma(String bin, int firstRot, int secRot, int thrRot){ //Here I initialized the second variation of sigma, which are a series of three bit rotations each with unique input values 
+        String bin1 = bin.substring(bin.length()-firstRot) + bin.substring(0,bin.length()-firstRot);  
+        String bin2 = bin.substring(bin.length()-secRot) + bin.substring(0,bin.length()-secRot); 
+        String bin3 = bin.substring(bin.length()-thrRot) + bin.substring(0,bin.length()-thrRot);  
+        String bin4 = "00000000000000000000000000000000";  
+        String bin5 = "00000000000000000000000000000000"; 
+        return addMod2to32(bin1, bin2, bin3, bin4, bin5);
     }
 
     public static void main(String[] args){
@@ -161,12 +173,15 @@ public class fic{
         String[] message = Arrays.copyOf(rows, block*64);   
          //Message formula 
         for(int x = 16 ;x< message.length; x++){
-            message[x] = addMod2to32(sigma(message[x-2],17,19,10), message[x-7], sigma(message[x-15],7,18,3), message[x-16]);        
+            message[x] = addMod2to32(sigma(message[x-2],17,19,10), message[x-7], sigma(message[x-15],7,18,3), message[x-16], "00000000000000000000000000000000");        
         }    
         for(int x = 0; x<message.length; x++){
             System.out.println("Message at index " +x + " : " + message[x]);
         } 
-        // Calculation of intermediate value within Hash 
+        // Calculation of intermediate value within Hash  
+        //First, T1 = h sigma1(e) + Ch(e,f,g) + ko + Wo 
+        String T1 = hashVals.get('h'); 
+        System.out.println(hexaTodec(T1));
 
        
      
