@@ -102,20 +102,16 @@ public class fic{
         }
         return bin;
     }
-    public static String sigma0(String bin){ //Here we are initializing sigma 0, right rotation 17 bits, then 19 bits, then shift 10 
-        String bin1 = bin.substring(bin.length()-17) + bin.substring(0,bin.length()-17);  // right rotation of 17 done by appending the first 0 to the 17th to last binary string to the 17th to last binary string 
-        String bin2 = bin.substring(bin.length()-19) + bin.substring(0,bin.length()-19); 
-        String bin3 = bin.substring(bin.length()-10) + bin.substring(0,bin.length()-10);  
-        bin3 = "0000000000" + bin3.substring(10); //right shift of 10 bits done by regular 10 bit rotation and then appending the 10th to last binary string to three 0s 
-        return addMod2(bin1,bin2,bin3);
-    } 
-    public static String sigma1(String bin){ //Here we are initializing sigma 1, right rotation 7 bits, then 18 bits, then shift 3 
-        String bin1 = bin.substring(bin.length()-7) + bin.substring(0,bin.length()-7);  // right rotation of 7 done by appending the first 0 to the seventh to last binary string to the seventh to last binary string
-        String bin2 = bin.substring(bin.length()-18) + bin.substring(0,bin.length()-18); 
-        String bin3 = bin.substring(bin.length()-3) + bin.substring(0,bin.length()-3); 
-        bin3 = "000" + bin3.substring(3); //right shift of 3 bits done by regular 3 bit rotation and then appending the third to last binary string to three 0s 
+    public static String sigma(String bin, int firstRot, int secRot, int shift){ //Here we are initializing sigma, with a binary input and the various input digits for each bit rotation and shift 
+        String bin1 = bin.substring(bin.length()-firstRot) + bin.substring(0,bin.length()-firstRot);  
+        String bin2 = bin.substring(bin.length()-secRot) + bin.substring(0,bin.length()-secRot); 
+        String bin3 = bin.substring(bin.length()-shift) + bin.substring(0,bin.length()-shift);  
+        bin3 = "0".repeat(shift) + bin3.substring(shift); 
         return addMod2(bin1,bin2,bin3);
     }  
+    public static String Csigma(String bin, int firstRot, int secRot, int thrRot){ //Here I initialized the second variation of sigma, which are a series of three bit rotations each with unique input values
+        return "";
+    }
 
     public static void main(String[] args){
         Scanner fileInput = new Scanner(System.in);  
@@ -162,14 +158,17 @@ public class fic{
             "19a4c116", "1e376c08", "2748774c", "34b0bcb5", "391c0cb3", "4ed8aa4a", "5b9cca4f", "682e6ff3", 
             "748f82ee", "78a5636f", "84c87814", "8cc70208", "90befffa", "a4506ceb", "bef9a3f7", "c67178f2"};  
         //Preparing message schedule 
-        String[] message = Arrays.copyOf(rows, block*64);  
+        String[] message = Arrays.copyOf(rows, block*64);   
+         //Message formula 
         for(int x = 16 ;x< message.length; x++){
-            message[x] = addMod2to32(sigma0(message[x-2]), message[x-7], sigma1(message[x-15]), message[x-16]);        
+            message[x] = addMod2to32(sigma(message[x-2],17,19,10), message[x-7], sigma(message[x-15],7,18,3), message[x-16]);        
         }    
         for(int x = 0; x<message.length; x++){
             System.out.println("Message at index " +x + " : " + message[x]);
-        }
-        //Message formula 
+        } 
+        // Calculation of intermediate value within Hash 
+
+       
      
         fileInput.close();
 
