@@ -84,7 +84,14 @@ public class fic{
     } 
     public static String Ch(String e, String f, String g){ //The choose function, using bits of e to tell us the inputs for f and g as output 
         String result = ""; 
-        
+        for(int x = 0; x< e.length(); x++){
+            if(e.charAt(x) == '1'){ 
+                result += f.charAt(x); 
+                continue;
+            } 
+            result += g.charAt(x); 
+        } 
+        return result;
 
     }
     public static String addMod2(String bin1, String bin2, String bin3){ // Function to add rotated and shifted binary string 
@@ -180,11 +187,14 @@ public class fic{
         // } 
         // Calculation of intermediate value within Hash  
         //First, T1 = h sigma1(e) + Ch(e,f,g) + ko + Wo 
-        String T1 = hashVals.get('h');  
-        String T2 = hashVals.get('e');
-        System.out.println(hexaTobin(T1));   // Retrieve binary representation for the hexadecimal of key h
-        System.out.println(Csigma(hexaTobin(T2),6,11,25)); // Retrieve the result of the binary shift sigma 1 
+        String T1 = hexaTobin(hashVals.get('h'));  // Retrieve binary representation for the hexadecimal of key h
+        String T2 = hexaTobin(hashVals.get('e'));// Retrieve binary representation for the hexadecimal of key e 
+        String T3 = hexaTobin(hashVals.get('f'));// Retrieve binary representation for the hexadecimal of key f
+        String T4 = hexaTobin(hashVals.get('g'));// Retrieve binary representation for the hexadecimal of key g
 
+        System.out.println(T1);   
+        System.out.println(Csigma(T2,6,11,25)); // Retrieve the result of the binary shift sigma 1 
+        System.out.println(Ch(T2,T3,T4));
         fileInput.close();
 
     }  
