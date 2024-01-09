@@ -7,9 +7,7 @@ import java.math.MathContext;
 import java.util.ArrayList; 
 import java.util.Arrays; 
 import java.util.HashMap;
- 
 public class fic{
-
     public static String charToBinary(char input){
         int ascii = (int)input; // Turn character into an ascii
         String binaryRepresentation = Integer.toBinaryString(ascii); //Sets ascii to binary 
@@ -22,7 +20,6 @@ public class fic{
         ArrayList<Integer> primesChecked = new ArrayList<>();  
         primesChecked.add(2);
         int num = 3; 
-    
         while(primesChecked.size()<8){  
             boolean test = true;
              for(int x = 0 ; x<primesChecked.size(); x++){
@@ -181,10 +178,7 @@ public class fic{
         // Calculation of intermediate value within Hash  
         //First, T1 = h sigma1(e) + Ch(e,f,g) + ko + Wo 
         String T1 = hashVals.get('h'); 
-        System.out.println(hexaTodec(T1));
-
-       
-     
+        System.out.println(hexaTodec(T1));   
         fileInput.close();
 
     }  
