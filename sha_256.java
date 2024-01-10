@@ -5,7 +5,7 @@ import java.math.MathContext;
 import java.util.ArrayList; 
 import java.util.Arrays; 
 import java.util.HashMap;
-public class fic{
+public class sha_256{
     public static String charToBinary(char input){
         int ascii = (int)input; // Turn character into an ascii
         String binaryRepresentation = Integer.toBinaryString(ascii); //Sets ascii to binary 
@@ -230,9 +230,6 @@ public class fic{
         for(int x = 16 ;x< message.length; x++){ 
             message[x] = fullAdder(fullAdder(fullAdder(sigma(message[x-2],17,19,10),message[x-7]), sigma(message[x-15],7,18,3)), message[x-16]);
         }    
-        // for(int x = 0; x<message.length; x++){
-        //     System.out.println("Message at index " +x + " : " + message[x]);
-        // } 
         // Calculation of intermediate value within Hash  
         //First, T1 = h sigma1(e) + Ch(e,f,g) + ko + Wo 
         String h = hexaTobin(hashVals.get('h'));  // Retrieve binary representation for the hexadecimal of key h
