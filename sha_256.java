@@ -1,4 +1,3 @@
-import java.util.Scanner;  
 import java.math.BigInteger;
 import java.math.BigDecimal;
 import java.math.MathContext;  
@@ -180,13 +179,10 @@ public class sha_256{
         } 
         return hexResult.toString(); //Convert StringBuilder into String
     }
-    public static void main(String[] args){
-        Scanner fileInput = new Scanner(System.in);  
-        String test = fileInput.next(); // read in file
-        String binary = ""; 
-
-        for(int x = 0 ; x<test.length(); x++){  
-            binary += charToBinary(test.charAt(x));  // for each character in file, get the binary string
+    public static String SHA(String file){
+        String binary = "";  
+        for(int x = 0 ; x<file.length(); x++){  
+            binary += charToBinary(file.charAt(x));  // for each character in file, get the binary string
         }   
 
         int binLength = binary.length();
@@ -265,9 +261,7 @@ public class sha_256{
         h = fullAdder(h,hexaTobin(hashVals.get('h')));  //remastered hash values  
         String hash = a + b + c + d + e + f + g + h; 
         hash = binToHexa(hash);
-        System.out.println(hash);
-        fileInput.close();
-
+        return hash;
     }  
 }
     
