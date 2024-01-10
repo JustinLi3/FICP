@@ -230,21 +230,36 @@ public class fic{
         String f = hexaTobin(hashVals.get('f'));// Retrieve binary representation for the hexadecimal of key f
         String g = hexaTobin(hashVals.get('g'));// Retrieve binary representation for the hexadecimal of key g 
         String a = hexaTobin(hashVals.get('a'));// Retrieve binary representation for the hexadecimal of key a 
-        String b = hexaTobin(hashVals.get('b'));// Retrieve binary representation for the hexadecimal of key a 
-        String c = hexaTobin(hashVals.get('c'));// Retrieve binary representation for the hexadecimal of key a
+        String b = hexaTobin(hashVals.get('b'));// Retrieve binary representation for the hexadecimal of key b 
+        String c = hexaTobin(hashVals.get('c'));// Retrieve binary representation for the hexadecimal of key c 
+        String d = hexaTobin(hashVals.get('d'));// Retrieve binary representation for the hexadecimal of key d 
+        String T1 = ""; 
+        String T2 = "";
 
-
-
-
-        System.out.println(h);   
-        System.out.println(Csigma(e,6,11,25)); // Retrieve the result of the binary shift sigma 1 
-        System.out.println(Ch(e,f,g));  
-        System.out.println(hexaTobin(k[0])); 
-        System.out.println(message[0]);  
-        String T1 = fullAdder(fullAdder(fullAdder(fullAdder(h, Csigma(e,6,11,25)), Ch(e,f,g)),hexaTobin(k[0])),message[0]); 
-        String T2 = fullAdder(Csigma(a,2,13,22),Maj(a,b,c)); 
-        System.out.println(T1);  
-        System.out.println(T2); 
+        for(int x = 0 ; x<64; x++){
+        T1 = fullAdder(fullAdder(fullAdder(fullAdder(h, Csigma(e,6,11,25)), Ch(e,f,g)),hexaTobin(k[x])),message[x]); 
+        T2 = fullAdder(Csigma(a,2,13,22),Maj(a,b,c)); 
+        h = g; 
+        g = f; 
+        f = e;
+        e = fullAdder(d, T1); 
+        d = c; 
+        c = b; 
+        b = a; 
+        a = fullAdder(T1,T2);
+        }   
+        a = fullAdder(a,hexaTobin(hashVals.get('a'))); 
+        b = fullAdder(b,hexaTobin(hashVals.get('b'))); 
+        c = fullAdder(c,hexaTobin(hashVals.get('c'))); 
+        d = fullAdder(d,hexaTobin(hashVals.get('d'))); 
+        e = fullAdder(e,hexaTobin(hashVals.get('e'))); 
+        f = fullAdder(f,hexaTobin(hashVals.get('f'))); 
+        g = fullAdder(g,hexaTobin(hashVals.get('g')));  
+        h = fullAdder(h,hexaTobin(hashVals.get('h')));  //remastered hash values  
+        String hash = a + b + c + d + e + f + g + h; 
+        
+        System.out.println(hash.bin)
+        System.out.println(a+"\n"+b+"\n"+c+"\n"+d+"\n"+e+"\n"+f+"\n"+g+"\n"+h);
         fileInput.close();
 
     }  
