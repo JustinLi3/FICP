@@ -31,7 +31,6 @@ public class fic{
              num++;
         } 
         return primesChecked;
-
     }
     public static BigDecimal sqrt(BigDecimal number, MathContext mc) { // Newton-Raphson Method to obtain square root to the mc percision
         BigDecimal initialGuess = number.divide(BigDecimal.valueOf(2), mc); // could be any reasonble guess but can affect convergence speed 
