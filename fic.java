@@ -258,8 +258,7 @@ public class fic{
         h = fullAdder(h,hexaTobin(hashVals.get('h')));  //remastered hash values  
         String hash = a + b + c + d + e + f + g + h; 
         
-        System.out.println(hash.bin)
-        System.out.println(a+"\n"+b+"\n"+c+"\n"+d+"\n"+e+"\n"+f+"\n"+g+"\n"+h);
+        System.out.println(hash);
         fileInput.close();
 
     }  
