@@ -169,7 +169,17 @@ public class fic{
             } 
         } 
         return result;
-    } 
+    }  
+    public static String binToHexa(String binary){
+        StringBuilder hexResult = new StringBuilder(); //StringBuilder efficient for building/manipulating strings 
+        for(int x = 0 ; x < binary.length() ; x +=4 ){ //Take chunks of the binary in blocks of four
+            String bits = binary.substring(x, x+4); 
+            int dec = Integer.parseInt(bits,2);  //Parse into decimal
+            String hexDig = Integer.toHexString(dec); //Parse into hexa 
+            hexResult.append(hexDig);
+        } 
+        return hexResult.toString(); //Convert StringBuilder into String
+    }
     public static void main(String[] args){
         Scanner fileInput = new Scanner(System.in);  
         String test = fileInput.next(); // read in file
@@ -257,7 +267,7 @@ public class fic{
         g = fullAdder(g,hexaTobin(hashVals.get('g')));  
         h = fullAdder(h,hexaTobin(hashVals.get('h')));  //remastered hash values  
         String hash = a + b + c + d + e + f + g + h; 
-        
+        hash = binToHexa(hash);
         System.out.println(hash);
         fileInput.close();
 
