@@ -106,6 +106,18 @@ public class fic{
             result += g.charAt(x); 
         } 
         return result;
+    } 
+    public static String Maj(String a, String b, String c){ //Implementation of the Majority function, where the majority of bits is appended  
+        String result = ""; 
+        for(int x = 0 ; x < a.length(); x++){
+            if((Character.getNumericValue(a.charAt(x)) + Character.getNumericValue(b.charAt(x)) + Character.getNumericValue(c.charAt(x)))>=2){
+                result += "1";
+            } 
+            else{
+                result += "0";
+            } 
+        } 
+        return result;
     }
     public static String addMod2(String bin1, String bin2, String bin3){ // Function to add rotated and shifted binary string 
         String bin = "";
@@ -213,18 +225,26 @@ public class fic{
         // } 
         // Calculation of intermediate value within Hash  
         //First, T1 = h sigma1(e) + Ch(e,f,g) + ko + Wo 
-        String T1 = hexaTobin(hashVals.get('h'));  // Retrieve binary representation for the hexadecimal of key h
-        String T2 = hexaTobin(hashVals.get('e'));// Retrieve binary representation for the hexadecimal of key e 
-        String T3 = hexaTobin(hashVals.get('f'));// Retrieve binary representation for the hexadecimal of key f
-        String T4 = hexaTobin(hashVals.get('g'));// Retrieve binary representation for the hexadecimal of key g
+        String h = hexaTobin(hashVals.get('h'));  // Retrieve binary representation for the hexadecimal of key h
+        String e = hexaTobin(hashVals.get('e'));// Retrieve binary representation for the hexadecimal of key e 
+        String f = hexaTobin(hashVals.get('f'));// Retrieve binary representation for the hexadecimal of key f
+        String g = hexaTobin(hashVals.get('g'));// Retrieve binary representation for the hexadecimal of key g 
+        String a = hexaTobin(hashVals.get('a'));// Retrieve binary representation for the hexadecimal of key a 
+        String b = hexaTobin(hashVals.get('b'));// Retrieve binary representation for the hexadecimal of key a 
+        String c = hexaTobin(hashVals.get('c'));// Retrieve binary representation for the hexadecimal of key a
 
-        System.out.println(T1);   
-        System.out.println(Csigma(T2,6,11,25)); // Retrieve the result of the binary shift sigma 1 
-        System.out.println(Ch(T2,T3,T4));  
+
+
+
+        System.out.println(h);   
+        System.out.println(Csigma(e,6,11,25)); // Retrieve the result of the binary shift sigma 1 
+        System.out.println(Ch(e,f,g));  
         System.out.println(hexaTobin(k[0])); 
         System.out.println(message[0]);  
-        String iv = fullAdder(fullAdder(fullAdder(fullAdder(T1, Csigma(T2,6,11,25)), Ch(T2,T3,T4)),hexaTobin(k[0])),message[0]); 
-        System.out.println(iv); 
+        String T1 = fullAdder(fullAdder(fullAdder(fullAdder(h, Csigma(e,6,11,25)), Ch(e,f,g)),hexaTobin(k[0])),message[0]); 
+        String T2 = fullAdder(Csigma(a,2,13,22),Maj(a,b,c)); 
+        System.out.println(T1);  
+        System.out.println(T2); 
         fileInput.close();
 
     }  
