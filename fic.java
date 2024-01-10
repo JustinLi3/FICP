@@ -118,17 +118,6 @@ public class fic{
         }
         return bin;
     } 
-    public static String addMod2(String bin1, String bin2, String bin3, String bin4, String bin5){//Final function   
-        String bin = "";
-        for(int x = 0 ; x<32 ; x++){ // traversal by formula
-            if(((int)bin1.charAt(x) + (int)bin2.charAt(x) + (int)bin3.charAt(x) + (int)bin4.charAt(x)+ (int)bin5.charAt(x))%2==1){ //if bit digits at n sum mod 2 is 1, 1 is appended
-                bin+="1"; 
-                continue;
-            } 
-            bin+="0"; //otherwise append 0
-        }
-        return bin;
-    }
     public static String sigma(String bin, int firstRot, int secRot, int shift){ //Here we are initializing sigma, with a binary input and the various input digits for each bit rotation and shift 
         String bin1 = bin.substring(bin.length()-firstRot) + bin.substring(0,bin.length()-firstRot);  
         String bin2 = bin.substring(bin.length()-secRot) + bin.substring(0,bin.length()-secRot); 
@@ -139,34 +128,36 @@ public class fic{
     public static String Csigma(String bin, int firstRot, int secRot, int thrRot){ //Here I initialized the second variation of sigma, which are a series of three bit rotations each with unique input values 
         String bin1 = bin.substring(bin.length()-firstRot) + bin.substring(0,bin.length()-firstRot);  
         String bin2 = bin.substring(bin.length()-secRot) + bin.substring(0,bin.length()-secRot); 
-        String bin3 = bin.substring(bin.length()-thrRot) + bin.substring(0,bin.length()-thrRot);  
-        String bin4 = "00000000000000000000000000000000";  
-        String bin5 = "00000000000000000000000000000000"; 
-        return addMod2(bin1, bin2, bin3, bin4, bin5);
+        String bin3 = bin.substring(bin.length()-thrRot) + bin.substring(0,bin.length()-thrRot);   
+        String result = addMod2(bin1, bin2, bin3);
+        return result;
     } 
     public static String fullAdder(String bin1, String bin2){  
         String result = ""; 
         int ci =0;
-        for(int x = 31; x>=0; x--){ 
-            int num = Character.getNumericValue(bin1.charAt(x)) + (Character.getNumericValue(bin1.charAt(x))) + ci;
-            switch(num){
+        for(int x = 31; x>=0; x--){ // reverse traversal to allow carry input to stack  
+            int num = Character.getNumericValue(bin1.charAt(x)) + Character.getNumericValue(bin2.charAt(x)) + ci; //get current value 
+            switch(num){ //if value 
                 case 3:
-                result += "1";   
-                ci = 1;
-                break; 
-
+                    result = "1" + result;   
+                    ci = 1;
+                    break; 
                 case 2:  
-                result += "0";
-                ci = 1;  
-                break;  
-
+                    result = "0" + result;
+                    ci = 1;  
+                    break;  
                 case 1:  
-                result += "0";
-                break;
+                    result = "1" + result; 
+                    ci = 0;  
+                    break; 
+                case 0: 
+                    result = "0" + result;
+                    ci = 0;   
+                    break;
             } 
         } 
         return result;
-    }
+    } 
     public static void main(String[] args){
         Scanner fileInput = new Scanner(System.in);  
         String test = fileInput.next(); // read in file
@@ -214,8 +205,8 @@ public class fic{
         //Preparing message schedule 
         String[] message = Arrays.copyOf(rows, block*64);   
          //Message formula 
-        for(int x = 16 ;x< message.length; x++){
-            message[x] = addMod2(sigma(message[x-2],17,19,10), message[x-7], sigma(message[x-15],7,18,3), message[x-16], "00000000000000000000000000000000");        
+        for(int x = 16 ;x< message.length; x++){ 
+            message[x] = fullAdder(fullAdder(fullAdder(sigma(message[x-2],17,19,10),message[x-7]), sigma(message[x-15],7,18,3)), message[x-16]);
         }    
         // for(int x = 0; x<message.length; x++){
         //     System.out.println("Message at index " +x + " : " + message[x]);
@@ -232,13 +223,8 @@ public class fic{
         System.out.println(Ch(T2,T3,T4));  
         System.out.println(hexaTobin(k[0])); 
         System.out.println(message[0]);  
-        BigInteger test1 = new BigInteger(T1,2); 
-        BigInteger test2 = new BigInteger(T1,2); 
-        BigInteger test3 = new BigInteger(T1,2); 
-        BigInteger test4 = new BigInteger(T1,2); 
-        BigInteger test5 = new BigInteger(T1,2); 
-        BigInteger yedd = test1.add(test2);     
-        System.out.println(yedd.toString(2)); 
+        String iv = fullAdder(fullAdder(fullAdder(fullAdder(T1, Csigma(T2,6,11,25)), Ch(T2,T3,T4)),hexaTobin(k[0])),message[0]); 
+        System.out.println(iv); 
         fileInput.close();
 
     }  
