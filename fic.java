@@ -1,4 +1,3 @@
-
 import java.util.Scanner;  
 import java.math.BigInteger;
 import java.math.BigDecimal;
@@ -75,7 +74,8 @@ public class fic{
         }
         return result;
         }  
-    public static String hexaTobin(String hexa){   //Due to inability to directly Parse as a Hexadecimal, we are going to change hexa to decimal into binary manually 
+     public static String hexaTobin(String hexa){   //Due to inability to directly Parse as a Hexadecimal, we are going to change hexa to decimal into binary manually 
+        String bin = "";
         BigInteger dec = BigInteger.valueOf(0);  // By the case of overflow, we must use Big Integer
         int exp = 0;  
         BigInteger num = BigInteger.valueOf(0); 
@@ -85,10 +85,17 @@ public class fic{
             BigInteger prog = num.multiply(base.pow(exp)); //Here we get the value to be added
             dec = dec.add(prog);  // Corrected line: Assign the result back to 'dec' due to immutability
             exp++; //increment exponent
-            hexa = hexa.substring(0,x); //shift upwards
-        }
-            return dec.toString();
+            hexa = hexa.substring(0,x); //shift upwards 
         } 
+        while(dec.compareTo(BigInteger.valueOf(0))!=0){
+            bin = (dec.mod(BigInteger.valueOf(2))).toString() + bin; //Decimal to binary through division
+            dec = dec.divide(BigInteger.valueOf(2));
+        } 
+        while(bin.length()<32){
+            bin = "0" +bin;
+        }
+        return bin;
+    }  
     public static String Ch(String e, String f, String g){ //The choose function, using bits of e to tell us the inputs for f and g as output 
         String result = ""; 
         for(int x = 0; x< e.length(); x++){
@@ -99,7 +106,6 @@ public class fic{
             result += g.charAt(x); 
         } 
         return result;
-
     }
     public static String addMod2(String bin1, String bin2, String bin3){ // Function to add rotated and shifted binary string 
         String bin = "";
@@ -112,7 +118,7 @@ public class fic{
         }
         return bin;
     } 
-    public static String addMod2to32(String bin1, String bin2, String bin3, String bin4, String bin5){//Final function  
+    public static String addMod2(String bin1, String bin2, String bin3, String bin4, String bin5){//Final function   
         String bin = "";
         for(int x = 0 ; x<32 ; x++){ // traversal by formula
             if(((int)bin1.charAt(x) + (int)bin2.charAt(x) + (int)bin3.charAt(x) + (int)bin4.charAt(x)+ (int)bin5.charAt(x))%2==1){ //if bit digits at n sum mod 2 is 1, 1 is appended
@@ -136,9 +142,31 @@ public class fic{
         String bin3 = bin.substring(bin.length()-thrRot) + bin.substring(0,bin.length()-thrRot);  
         String bin4 = "00000000000000000000000000000000";  
         String bin5 = "00000000000000000000000000000000"; 
-        return addMod2to32(bin1, bin2, bin3, bin4, bin5);
-    }
+        return addMod2(bin1, bin2, bin3, bin4, bin5);
+    } 
+    public static String fullAdder(String bin1, String bin2){  
+        String result = ""; 
+        int ci =0;
+        for(int x = 31; x>=0; x--){ 
+            int num = Character.getNumericValue(bin1.charAt(x)) + (Character.getNumericValue(bin1.charAt(x))) + ci;
+            switch(num){
+                case 3:
+                result += "1";   
+                ci = 1;
+                break; 
 
+                case 2:  
+                result += "0";
+                ci = 1;  
+                break;  
+
+                case 1:  
+                result += "0";
+                break;
+            } 
+        } 
+        return result;
+    }
     public static void main(String[] args){
         Scanner fileInput = new Scanner(System.in);  
         String test = fileInput.next(); // read in file
@@ -174,7 +202,7 @@ public class fic{
             hashVals.put((Character)ptr++, decToHexa(primeSqrd));  
         }   
         //onto constants, first 32 bits of the fractional parts of the cube roots of the first sixty-four prime numbers 
-        String prime64[] = new String[]{ //64 different keys
+        String k[] = new String[]{ //64 different keys
             "428a2f98", "71374491", "b5c0fbcf", "e9b5dba5", "3956c25b", "59f111f1", "923f82a4", "ab1c5ed5",
             "d807aa98", "12835b01", "243185be", "550c7dc3", "72be5d74", "80deb1fe", "9bdc06a7", "c19bf174",
             "e49b69c1", "efbe4786", "0fc19dc6", "240ca1cc", "2de92c6f", "4a7484aa", "5cb0a9dc", "76f988da",
@@ -187,7 +215,7 @@ public class fic{
         String[] message = Arrays.copyOf(rows, block*64);   
          //Message formula 
         for(int x = 16 ;x< message.length; x++){
-            message[x] = addMod2to32(sigma(message[x-2],17,19,10), message[x-7], sigma(message[x-15],7,18,3), message[x-16], "00000000000000000000000000000000");        
+            message[x] = addMod2(sigma(message[x-2],17,19,10), message[x-7], sigma(message[x-15],7,18,3), message[x-16], "00000000000000000000000000000000");        
         }    
         // for(int x = 0; x<message.length; x++){
         //     System.out.println("Message at index " +x + " : " + message[x]);
@@ -201,7 +229,16 @@ public class fic{
 
         System.out.println(T1);   
         System.out.println(Csigma(T2,6,11,25)); // Retrieve the result of the binary shift sigma 1 
-        System.out.println(Ch(T2,T3,T4));
+        System.out.println(Ch(T2,T3,T4));  
+        System.out.println(hexaTobin(k[0])); 
+        System.out.println(message[0]);  
+        BigInteger test1 = new BigInteger(T1,2); 
+        BigInteger test2 = new BigInteger(T1,2); 
+        BigInteger test3 = new BigInteger(T1,2); 
+        BigInteger test4 = new BigInteger(T1,2); 
+        BigInteger test5 = new BigInteger(T1,2); 
+        BigInteger yedd = test1.add(test2);     
+        System.out.println(yedd.toString(2)); 
         fileInput.close();
 
     }  
