@@ -1,6 +1,13 @@
 import java.nio.file.Files; 
 import java.nio.file.Path; 
-
+ /*
+  * NOTE!!! 
+  1. User provies filename/filepath 
+  2. Access specific file 
+  3. Read content and hash 
+  4. Compare to previously stored hash 
+  5. Integrity check
+  */
 import java.util.Scanner;
 public class fic {
     public static void main(String args[]){
