@@ -1,7 +1,7 @@
 import java.io.IOException;
 import java.nio.file.*; 
 import java.util.Scanner;
-import java.util.List;
+import java.util.List; 
  /*
   * NOTE!!! 
   1. User provies filename/filepath 
@@ -23,16 +23,16 @@ public class fic {
             }
             String hash = sha_256.SHA(content.toString());  //hash all of the content
             System.out.println("Hash Result: " + hash);  
-            String storedHash = ""; 
-            if(storedHash.isEmpty()){
+            String storedHash = Files.readString(Paths.get("/Users/toadli/FICP/FICP-3/storedHash.txt")); //Read string from external file
+            if(storedHash.isEmpty()){ //If empty, update external file
                 System.out.println("No stored hash found. Storing calculated hash right now."); 
-                Files.writeString(Paths.get("/Users/toadli/FICP/FICP-3/storedHash.txt"),hash);
+                Files.writeString(Paths.get("/Users/toadli/FICP/FICP-3/storedHash.txt"),hash); //Place hash within empty external file
             } 
             else{
                 if(storedHash.equals(hash)){
                     System.out.println("File integrity is maintained. Matched hashes."); 
                 } 
-                else{
+                else{//Changes have been made to the code
                     System.out.println("File integrity failed. Hashes do not match.");
                 }
             }
