@@ -26,7 +26,7 @@ public class fic {
             String storedHash = ""; 
             if(storedHash.isEmpty()){
                 System.out.println("No stored hash found. Storing calculated hash right now."); 
-                storedHash = hash;
+                Files.writeString(Paths.get("/Users/toadli/FICP/FICP-3/storedHash.txt"),hash);
             } 
             else{
                 if(storedHash.equals(hash)){
