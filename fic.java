@@ -1,5 +1,7 @@
-import java.nio.file.Files; 
-import java.nio.file.Path; 
+import java.io.IOException;
+import java.nio.file.*; 
+import java.util.Scanner;
+import java.util.List;
  /*
   * NOTE!!! 
   1. User provies filename/filepath 
@@ -8,14 +10,18 @@ import java.nio.file.Path;
   4. Compare to previously stored hash 
   5. Integrity check
   */
-import java.util.Scanner;
 public class fic {
     public static void main(String args[]){
         Scanner scanner = new Scanner(System.in);  
-        System.out.println("Please enter the file path: ");
+        System.out.println("Please enter the file path: "); 
         String filePath = scanner.nextLine();  //Accept file path from user
-        try{ //check whether file path can be hashed and calculate hash
-            String hash = sha_256.SHA(filePath); 
+        try{ //check whether file path can be hashed and calculate hash 
+            List<String> lines = Files.readAllLines(Paths.get(filePath)); //Utilize list as a way to hold each line
+            StringBuilder content = new StringBuilder(); //String builder class to help with holding content
+            for(String line : lines){ //For each line within the list, append onto content
+                content.append(line);
+            }
+            String hash = sha_256.SHA(content.toString());  //hash all of the content
             System.out.println("Hash Result: " + hash);  
             String storedHash = ""; 
             if(storedHash.isEmpty()){
